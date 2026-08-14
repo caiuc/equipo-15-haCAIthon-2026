@@ -1,28 +1,43 @@
-const express = require('express');
-const cors = require('cors');
-const app = express();
-const PORT = 3001;
+import Koa from 'koa';
+import cors from '@koa/cors';
+import bodyParser from 'koa-bodyparser';
+import { sequelize } from './src/models/index.js';
+import { routers } from './src/routes/index.js';
+import { startDailyCronJob } from './src/jobs/dailyCheck.js';
 
-// Middleware
+const app = new Koa();
+const PORT = process.env.PORT || 3001;
+
 app.use(cors());
-app.use(express.json());
+app.use(bodyParser());
 
-// Endpoint para recibir mensajes
-app.post('/api/message', (req, res) => {
-    const { message } = req.body;
-    console.log(`Mensaje recibido: ${message}`);
-    
-    res.json({
-        success: true,
-        reply: `¡Hola desde el servidor! Recibí tu: "${message}"`
-    });
+app.use(async (ctx, next) => {
+  try {
+    await next();
+  } catch (err) {
+    // A stale userId (client cached one from before a DB reset, or a deleted profile) trips
+    // this FK constraint deep in Sequelize/SQLite — surface it as the same clean 404 the
+    // routes already use instead of leaking the raw SQLite error string.
+    if (err.name === 'SequelizeForeignKeyConstraintError') {
+      ctx.status = 404;
+      ctx.body = { error: 'Usuario no encontrado. Vuelve a guardar tu perfil para crear uno nuevo.' };
+      return;
+    }
+    ctx.status = err.status || 500;
+    ctx.body = { error: err.message };
+  }
 });
 
-// Endpoint básico de prueba
-app.get('/health', (req, res) => {
-    res.send('Backend operativo');
+for (const router of routers) {
+  app.use(router.routes()).use(router.allowedMethods());
+}
+
+app.use(async (ctx) => {
+  ctx.body = { status: 'Sanito API operativo' };
 });
 
+await sequelize.sync();
+startDailyCronJob();
 app.listen(PORT, () => {
-    console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Sanito backend en http://localhost:${PORT}`);
 });
