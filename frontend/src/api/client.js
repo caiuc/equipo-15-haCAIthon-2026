@@ -1,6 +1,7 @@
-// ponytail: hardcoded LAN/localhost base URL, no env-var plumbing for a hackathon build.
-// Physical device on Expo Go can't reach "localhost" — set this to your machine's LAN IP.
-export const API_URL = 'http://localhost:3001';
+// EXPO_PUBLIC_* vars are inlined at build time by Expo/Metro. Falls back to localhost for
+// local dev — on a physical device with Expo Go, "localhost" won't reach your machine, set
+// EXPO_PUBLIC_API_URL to your LAN IP or the deployed backend URL instead.
+export const API_URL = process.env.EXPO_PUBLIC_API_URL || 'http://localhost:3001';
 
 // Set by AuthContext on login/register/logout/rehydrate. A plain module variable is enough —
 // there's only ever one active session per app instance.

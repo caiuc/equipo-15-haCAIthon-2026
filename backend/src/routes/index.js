@@ -5,6 +5,7 @@ import { chatRouter } from './chat.js';
 import { makeAuthScopedCrud } from './crud.js';
 import { doctorAuthRouter } from './doctorAuth.js';
 import { doctorPatientsRouter } from './doctorPatients.js';
+import { cronRouter } from './cron.js';
 
 export const routers = [
   authRouter,
@@ -15,4 +16,5 @@ export const routers = [
   makeAuthScopedCrud(Appointment, 'appointments'),
   doctorAuthRouter,
   doctorPatientsRouter,
+  cronRouter,
 ];
