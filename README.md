@@ -8,7 +8,7 @@
 - Benjamin Ponce
 
 ## Instrucciones para correr la prueba
-
+- en el .env, poner GROQ_API_KEY = api_key_de_groq_aqui
 - nvm install 22
 - nvm use 22
 - En el backend y el frontend (yarn)
