@@ -1,0 +1,114 @@
+#root {
+  width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.mobile-container {
+  width: 100%;
+  max-width: 450px;
+  background-color: white;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.app-header {
+  background-color: #007AFF;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.app-header h1 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  padding: 30px;
+  border-radius: 15px;
+  background-color: #ffffff;
+}
+
+.card h2 {
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.card p {
+  color: #666;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.main-button {
+  width: 100%;
+  padding: 15px;
+  border-radius: 10px;
+  border: none;
+  background-color: #007AFF;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.main-button:active {
+  background-color: #0056b3;
+  transform: scale(0.98);
+}
+
+.main-button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.response-area {
+  margin-top: 25px;
+  padding: 15px;
+  background-color: #e8f4ff;
+  border-radius: 10px;
+  border-left: 5px solid #007AFF;
+  animation: slideDown 0.3s ease-out;
+}
+
+.response-text {
+  color: #004a99;
+  margin: 0;
+  font-weight: 500;
+}
+
+.app-footer {
+  padding: 15px;
+  color: #888;
+  font-size: 0.8rem;
+  border-top: 1px solid #eee;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
