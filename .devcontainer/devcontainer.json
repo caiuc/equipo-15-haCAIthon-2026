@@ -1,0 +1,30 @@
+{
+  "name": "Sanito · HaCAithon 2026",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "forwardPorts": [
+    3000,
+    8081
+  ],
+  "portsAttributes": {
+    "3000": {
+      "label": "Servicio 3000",
+      "onAutoForward": "silent"
+    },
+    "8081": {
+      "label": "Aplicación",
+      "onAutoForward": "openPreview"
+    }
+  },
+  "postAttachCommand": {
+    "app": "bash -lc 'cd backend && node index.js & cd frontend && npx expo start --web --port 8081; wait'"
+  },
+  "customizations": {
+    "codespaces": {
+      "openFiles": [
+        "README.md"
+      ]
+    }
+  },
+  "postCreateCommand": "bash -lc 'cd backend && npm install; cd ../frontend && npm install'",
+  "//": "El asistente conversacional necesita GROQ_API_KEY en backend/.env"
+}
